@@ -1,9 +1,9 @@
 package com.exin.exindemo;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.exin.exindemo.entity.User;
 import com.exin.exindemo.mapper.UserMapper;
-import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -108,6 +108,36 @@ class ExindemoApplicationTests {
     }
 
 
+    @Test
+    public void testQuery(){
+        QueryWrapper<User> wrapper=new QueryWrapper<>();
+
+        //eq 、ne   = 、!= <>
+        //wrapper.eq("name","libai")
+        //wrapper.ne("name","libai");
+
+
+        //between  范围
+        //查询年龄20-30
+        wrapper.between("age",20,30);
+        List<User> users = userMapper.selectList(wrapper);
+        System.out.println(users);
+
+        //like  模糊查询
+        wrapper.like("age",20);
+
+        //orderby  排序
+        wrapper.orderByDesc("id");
+
+        //last  语句最后拼接sql语句
+        wrapper.last("limit 1");
+
+        //指定要查询的列
+      wrapper.select("id","name");
+
+
+
+    }
 
 
 
